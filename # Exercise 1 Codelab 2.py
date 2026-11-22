@@ -20,13 +20,13 @@ def displayMenu():
 
     Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=lambda:back_menu(menu)).pack(pady=20)
 
-def back_menu(menu):
+def back_menu(menu):#a destroy function for the difficulty menu. It will return you to the main window.
     go_back = messagebox.askyesno("Confirm","Do you want to go back to the menu?")
     if go_back:
         menu.destroy()
 
 
-def destroy():
+def destroy():#Closes the software
     answer = messagebox.askyesno("Exit", "Would you like to close the app?")
     if answer:
         root.destroy()

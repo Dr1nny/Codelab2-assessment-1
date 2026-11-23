@@ -3,9 +3,10 @@ from tkinter import *
 import random
 from tkinter import messagebox
 
-hearts = 5 #the ammount of tries before the user runs out of attempts
+tries = 1 #if number of tries goes up, points of the answer will be cut in half
 questions_for_quiz = 10 # how many questions will there be for each difficulty
 
+#Function Keys Section
 def displayMenu():
     menu=Toplevel(root)
     menu.title("Difficulty")
@@ -14,19 +15,31 @@ def displayMenu():
 
     Label(menu, text="Choose your difficulty", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20)
 
-    Button(menu, text="Easy", font=("Tahoma", 20, "bold"), bg="#22628e", width=15).pack(pady=20)
-    Button(menu, text="Medium", font=("Tahoma", 20, "bold"), bg="#22628e", width=15).pack(pady=20)
-    Button(menu, text="Hard", font=("Tahoma", 20, "bold"), bg="#22628e", width=15).pack(pady=20)
+    Button(menu, text="Easy", font=("Tahoma", 20, "bold"), bg="#22628e", width=15).pack(pady=20)#single digit quiz
+    Button(menu, text="Moderate", font=("Tahoma", 20, "bold"), bg="#22628e", width=15).pack(pady=20)#2-digit quiz
+    Button(menu, text="Advanced", font=("Tahoma", 20, "bold"), bg="#22628e", width=15).pack(pady=20)#4-digit quiz
 
     Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=lambda:back_menu(menu)).pack(pady=20)
 
-def back_menu(menu):#a destroy function for the difficulty menu. It will return you to the main window.
+def displayResults():
+    holder
+
+def displayProblem():
+    holder
+
+def decideOperation():
+    holder
+
+def randomInt():
+    NumberGenerate = random.randint(1, 100)
+
+def back_menu(menu):
     go_back = messagebox.askyesno("Confirm","Do you want to go back to the menu?")
     if go_back:
         menu.destroy()
 
 
-def destroy():#Closes the software
+def destroy():
     answer = messagebox.askyesno("Exit", "Would you like to close the app?")
     if answer:
         root.destroy()
@@ -49,8 +62,6 @@ bt1.place(x=317, y=150)
 
 e1 = Button(root, text = "Exit", fg="Black", bg="#001111",font=("tahoma",12, "bold"),command = destroy)
 e1.place(x=173,y=350)
-
-#Buttons that opens a window for difficulty modes
 
 
 

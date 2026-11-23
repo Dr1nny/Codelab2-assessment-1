@@ -11,14 +11,14 @@ def displayResults():
     holder
 
 def decideOperation():#creates a 50/50 on deciding which operation should be used
-    return random.choice(["+"],["-"])
+    return random.choice(["+", "-"])
     print(decideOperation)#testing purposes on another python file; note to self - delete after finalising
 
 def displayProblem():
     holder
 
-def randomInt():
-    NumberGenerate = random.randint(1, 100)
+def randomInt(max_num):
+    return random.randint(1, max_num)
 
 def back_menu(menu):
     go_back = messagebox.askyesno("Confirm","Do you want to go back to the menu?")
@@ -45,7 +45,7 @@ def displayMenu():
         Label(menu, text="Question Label", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20) #This will display how many questions there are left
         Label(menu, text="Score Label", font=("Tahoma", 16), bg="#22628e", fg="white").pack()# How much score the user gets in total
         Label(menu, text="Problem Label", font=("Tahoma", 16, "bold"), bg="#22628e", fg="white").pack(pady=20)# The problem that the user has to solve
-        Entry(menu, font=("Tahoma", 24, "bold"), fg="white").pack(pady=20)# The entry for the user can type their answer
+        answer = Entry(menu, font=("Tahoma", 24, "bold"), fg="white").pack(pady=20)# The entry for the user can type their answer
         def returntoMenu():
             for w in menu.winfo_children():#code referenced from deepseek
                 w.destroy()
@@ -92,5 +92,5 @@ e1 = Button(root, text = "Exit", fg="Black", bg="#001111",font=("tahoma",12, "bo
 e1.place(x=173,y=350)
 
 
-
+print(randomInt(999))#test the randomizer
 root.mainloop()

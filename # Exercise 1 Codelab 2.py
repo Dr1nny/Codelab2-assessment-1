@@ -7,27 +7,6 @@ tries = 1 #if number of tries goes up, points of the answer will be cut in half
 questions_for_quiz = 10 # how many questions will there be for each difficulty
 
 #Function Keys Section
-def displayMenu():
-    menu=Toplevel(root)
-    menu.title("Difficulty")
-    menu.geometry("800x500")
-    menu.config(bg="#22628e")
-
-    def quizTab():
-        for w in menu.winfo_children():#code referenced from deepseek
-            w.destroy()
-        menu.title("Hello does this work testing")
-
-    Label(menu, text="Choose your difficulty", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20)
-
-    Button(menu, text="Easy", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=quizTab).pack(pady=20)#single digit quiz
-    Button(menu, text="Moderate", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=quizTab).pack(pady=20)#2-digit quiz
-    Button(menu, text="Advanced", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=quizTab).pack(pady=20)#4-digit quiz
-
-    Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=lambda:back_menu(menu)).pack(pady=20)
-
-        
-
 def displayResults():
     holder
 
@@ -50,6 +29,42 @@ def destroy():
     answer = messagebox.askyesno("Exit", "Would you like to close the app?")
     if answer:
         root.destroy()
+
+def displayMenu():
+    menu=Toplevel(root)
+    menu.title("Difficulty")
+    menu.geometry("800x500")
+    menu.config(bg="#22628e")
+
+    def quizTab(difficulty):
+        for w in menu.winfo_children():#code referenced from deepseek
+            w.destroy()
+        menu.title(f"{difficulty} Quiz")
+
+        def returntoMenu():
+            for w in menu.winfo_children():#code referenced from deepseek
+                w.destroy()
+            menu.title("Difficulty")
+            Label(menu, text="Choose your difficulty", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20)
+                
+            Button(menu, text="Easy", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Easy")).pack(pady=20)#single digit quiz
+            Button(menu, text="Moderate", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Moderate")).pack(pady=20)#2-digit quiz    
+            Button(menu, text="Advanced", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Advanced")).pack(pady=20)#4-digit quiz
+            
+            Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=lambda:back_menu(menu)).pack(pady=20)
+        
+        Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=returntoMenu).pack(pady=20)
+
+
+    Label(menu, text="Choose your difficulty", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20)
+
+    Button(menu, text="Easy", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Easy")).pack(pady=20)#single digit quiz
+    Button(menu, text="Moderate", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Moderate")).pack(pady=20)#2-digit quiz
+    Button(menu, text="Advanced", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Advanced")).pack(pady=20)#4-digit quiz
+
+    Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=lambda:back_menu(menu)).pack(pady=20)
+
+        
 
 
 #Set output window

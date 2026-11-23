@@ -13,13 +13,20 @@ def displayMenu():
     menu.geometry("800x500")
     menu.config(bg="#22628e")
 
+    def quizTab():
+        for w in menu.winfo_children():#code referenced from deepseek
+            w.destroy()
+        menu.title("Hello does this work testing")
+
     Label(menu, text="Choose your difficulty", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20)
 
-    Button(menu, text="Easy", font=("Tahoma", 20, "bold"), bg="#22628e", width=15).pack(pady=20)#single digit quiz
-    Button(menu, text="Moderate", font=("Tahoma", 20, "bold"), bg="#22628e", width=15).pack(pady=20)#2-digit quiz
-    Button(menu, text="Advanced", font=("Tahoma", 20, "bold"), bg="#22628e", width=15).pack(pady=20)#4-digit quiz
+    Button(menu, text="Easy", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=quizTab).pack(pady=20)#single digit quiz
+    Button(menu, text="Moderate", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=quizTab).pack(pady=20)#2-digit quiz
+    Button(menu, text="Advanced", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=quizTab).pack(pady=20)#4-digit quiz
 
     Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=lambda:back_menu(menu)).pack(pady=20)
+
+        
 
 def displayResults():
     holder

@@ -13,8 +13,9 @@ def displayResults():
 def displayProblem():
     holder
 
-def decideOperation():
-    holder
+def decideOperation():#creates a 50/50 on deciding which operation should be used
+    return random.choice(["+"],["-"])
+    print(decideOperation)#testing purposes on another python file; note to self - delete after finalising
 
 def randomInt():
     NumberGenerate = random.randint(1, 100)

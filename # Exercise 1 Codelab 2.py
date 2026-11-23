@@ -10,12 +10,12 @@ questions_for_quiz = 10 # how many questions will there be for each difficulty
 def displayResults():
     holder
 
-def displayProblem():
-    holder
-
 def decideOperation():#creates a 50/50 on deciding which operation should be used
     return random.choice(["+"],["-"])
     print(decideOperation)#testing purposes on another python file; note to self - delete after finalising
+
+def displayProblem():
+    holder
 
 def randomInt():
     NumberGenerate = random.randint(1, 100)
@@ -42,6 +42,10 @@ def displayMenu():
             w.destroy()
         menu.title(f"{difficulty} Quiz")
 
+        Label(menu, text="Question Label", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20) #This will display how many questions there are left
+        Label(menu, text="Score Label", font=("Tahoma", 16), bg="#22628e", fg="white").pack()# How much score the user gets in total
+        Label(menu, text="Problem Label", font=("Tahoma", 16, "bold"), bg="#22628e", fg="white").pack(pady=20)# The problem that the user has to solve
+        Entry(menu, font=("Tahoma", 24, "bold"), fg="white").pack(pady=20)# The entry for the user can type their answer
         def returntoMenu():
             for w in menu.winfo_children():#code referenced from deepseek
                 w.destroy()
@@ -54,7 +58,8 @@ def displayMenu():
             
             Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=lambda:back_menu(menu)).pack(pady=20)
         
-        Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=returntoMenu).pack(pady=20)
+        Button(menu, text="Submit", font=("Tahoma", 20, "bold"), bg="#22628e", width=5).pack(pady=20)#Button to submit your answer
+        Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=returntoMenu).pack(pady=20)#Goes back to difficulty menu
 
 
     Label(menu, text="Choose your difficulty", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20)

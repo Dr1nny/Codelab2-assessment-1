@@ -3,7 +3,6 @@ from tkinter import *
 import random
 from tkinter import messagebox
 
-tries = 1 #if number of tries goes up, points of the answer will be cut in half
 questions_for_quiz = 10 # how many questions will there be for each difficulty
 
 #Function Keys Section
@@ -12,10 +11,25 @@ def displayResults():
 
 def decideOperation():#creates a 50/50 on deciding which operation should be used
     return random.choice(["+", "-"])
-    print(decideOperation)#testing purposes on another python file; note to self - delete after finalising
 
-def displayProblem():
-    holder
+def displayProblem(difficulty, menu):
+    if difficulty == "Easy":
+        max_num = 9 #When selecting easy, the maximum number that the random can go to is 9.
+    elif difficulty == "Moderate":
+        max_num = 99 #Does the same thing for easy but allows 2-digits instead on single digits
+    else:
+        max_num = 9999 #Allows 4-digits for advanced button.
+    
+    a = randomInt(max_num)#Holds a random number in this variable
+    b = randomInt(max_num)#Holds another random number for this variable
+    op = decideOperation()#Decides whether if the symbol is "+" or "-", a coin-flip
+    correct = a + b if op == '+' else a - b#Computes the answer based on the stored operation
+
+    Label(menu, text=f"{a} {op} {b} = ?", font=("Tahoma", 16, "bold"),bg="#22628e", fg="white").pack(pady=20)
+    answer = Entry(menu, font=("Tahoma", 24, "bold"), fg="white")# The entry for the user can type their answer
+    answer.pack(pady=20)
+
+    return answer, correct
 
 def randomInt(max_num):
     return random.randint(1, max_num)
@@ -38,39 +52,59 @@ def displayMenu():
     menu.config(bg="#22628e")
 
     def quizTab(difficulty):
+        tries = 1 #if number of tries goes up, points of the answer will be cut in half
         for w in menu.winfo_children():#code referenced from deepseek
             w.destroy()
         menu.title(f"{difficulty} Quiz")
 
-        Label(menu, text="Question Label", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20) #This will display how many questions there are left
-        Label(menu, text="Score Label", font=("Tahoma", 16), bg="#22628e", fg="white").pack()# How much score the user gets in total
-        Label(menu, text="Problem Label", font=("Tahoma", 16, "bold"), bg="#22628e", fg="white").pack(pady=20)# The problem that the user has to solve
-        answer = Entry(menu, font=("Tahoma", 24, "bold"), fg="white").pack(pady=20)# The entry for the user can type their answer
+        Label(menu, text=f"Question 1 out of {questions_for_quiz}", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20) #This will display how many questions there are left
+        Label(menu, text="Score: 0", font=("Tahoma", 16), bg="#22628e", fg="white").pack()# How much score the user gets in total
+
+        answer_entry, correct_answer = displayProblem(difficulty, menu)
+
+        def submit():#Creates a function for submit button to work
+            nonlocal tries#binds to quizTab function's tries.
+
+            try:
+                user_val = int(answer_entry.get())
+            except ValueError:
+                messagebox.showwarning("Invalid", "Please enter a number.")
+                return
+            if user_val == correct_answer:
+                messagebox.showinfo("Correct!", "Nice work!")
+                
+            else:
+                tries += 1
+                if tries <= 2:
+                    messagebox.showwarning("Try again", "One more try.")
+                    answer_entry.delete(0, END)
+                    answer_entry.focus_set()
+                else:
+                    messagebox.showerror("Wrong", f"The answer was {correct_answer}.")
+        
         def returntoMenu():
             for w in menu.winfo_children():#code referenced from deepseek
                 w.destroy()
             menu.title("Difficulty")
             Label(menu, text="Choose your difficulty", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20)
                 
-            Button(menu, text="Easy", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Easy")).pack(pady=20)#single digit quiz
-            Button(menu, text="Moderate", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Moderate")).pack(pady=20)#2-digit quiz    
-            Button(menu, text="Advanced", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Advanced")).pack(pady=20)#4-digit quiz
+            Button(menu, text="Easy", font=("Tahoma", 20, "bold"), fg="#2d8e22", width=15, command=lambda: quizTab("Easy")).pack(pady=20)#single digit quiz
+            Button(menu, text="Moderate", font=("Tahoma", 20, "bold"), fg="#dee10e", width=15, command=lambda: quizTab("Moderate")).pack(pady=20)#2-digit quiz    
+            Button(menu, text="Advanced", font=("Tahoma", 20, "bold"), fg="#8e2222", width=15, command=lambda: quizTab("Advanced")).pack(pady=20)#4-digit quiz
             
             Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=lambda:back_menu(menu)).pack(pady=20)
         
-        Button(menu, text="Submit", font=("Tahoma", 20, "bold"), bg="#22628e", width=5).pack(pady=20)#Button to submit your answer
+        Button(menu, text="Submit", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=submit).pack(pady=20)#Button to submit your answer
         Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=returntoMenu).pack(pady=20)#Goes back to difficulty menu
 
 
     Label(menu, text="Choose your difficulty", font=("Tahoma", 24, "bold"), bg="#22628e", fg="white").pack(pady=20)
 
-    Button(menu, text="Easy", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Easy")).pack(pady=20)#single digit quiz
-    Button(menu, text="Moderate", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Moderate")).pack(pady=20)#2-digit quiz
-    Button(menu, text="Advanced", font=("Tahoma", 20, "bold"), bg="#22628e", width=15, command=lambda: quizTab("Advanced")).pack(pady=20)#4-digit quiz
+    Button(menu, text="Easy", font=("Tahoma", 20, "bold"), fg="#2d8e22", width=15, command=lambda: quizTab("Easy")).pack(pady=20)#single digit quiz
+    Button(menu, text="Moderate", font=("Tahoma", 20, "bold"), fg="#dee10e", width=15, command=lambda: quizTab("Moderate")).pack(pady=20)#2-digit quiz
+    Button(menu, text="Advanced", font=("Tahoma", 20, "bold"), fg="#8e2222", width=15, command=lambda: quizTab("Advanced")).pack(pady=20)#4-digit quiz
 
     Button(menu, text="Go Back", font=("Tahoma", 20, "bold"), bg="#22628e", width=5, command=lambda:back_menu(menu)).pack(pady=20)
-
-        
 
 
 #Set output window
